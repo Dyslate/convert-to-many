@@ -1,22 +1,15 @@
 from moviepy.editor import VideoFileClip
+import json
 
 class VideoConverter:
     def __init__(self):
-        self.codec_mapping = {
-            "webm": "libvpx",
-            "avi": "rawvideo",
-            "mp4": "libx264",
-            "gif": None,  # Pas de codec spécifique pour les GIFs
-            "mov": "libx264",
-            "flv": "flv",
-            "mkv": "libx264",
-            "wmv": "wmv2",
-            "mpg": "mpeg1video",
-            "3gp": "h263",
-            "ogg": "libtheora",
-            "m4v": "libx264"
-            # Ajoutez d'autres formats et codecs si nécessaire
-        }
+        self.codec_mapping = self.load_codec_mapping()
+
+    def load_codec_mapping(self):
+        codec_mapping = {}
+        with open('data_codec.json', 'r') as file:
+            codec_mapping = json.load(file)
+        return codec_mapping
 
     def convert_to_format(self, input_file, output_format):
         try:
@@ -53,13 +46,12 @@ class VideoConverter:
 # Créer une instance de la classe VideoConverter
 converter = VideoConverter()
 
-# Afficher les formats disponibles à l'utilisateur
-print("Formats de sortie disponibles :")
-for output_format in converter.codec_mapping.keys():
-    print(output_format)
-
 # Demander le nom du fichier d'entrée à l'utilisateur
 input_file = input("Entrez le nom du fichier d'entrée : ")
+
+print("Formats de sortie disponibles :")
+available_formats = ", ".join(converter.codec_mapping.keys())
+print(available_formats)
 
 # Demander le format de sortie à l'utilisateur
 output_format = input("Choisissez le format de sortie : ")
