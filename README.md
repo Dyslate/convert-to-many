@@ -1,5 +1,5 @@
-# convert-to-webm
-Tool for converting video into webm (send video for discord)
+# convert-to-many
+Tool for converting video into webm (send video for discord) or other supported codecs.
 
 Install requirements
 ```terminal
